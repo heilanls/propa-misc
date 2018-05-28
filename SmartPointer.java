@@ -5,14 +5,20 @@ interface Freeable {
 }
 
 final public class SmartPointer<T extends Freeable> {
-   private <T extends Freeable> target;
+   
+   private T target;
+   
     /**
      * @return a SmartPointer pointing to a newly allocated T.
      */
     public static <T extends Freeable> SmartPointer<T> make(T target) throws IllegalArgumentException{
-       SmartPointer<T> sp = new SmartPointer<>();
-       sp.target = target;
-       return sp;
+       if(target instanceof Freeable){
+          SmartPointer<T> sp = new SmartPointer<>();
+          sp.target = target;
+          return sp;  
+       }else{ 
+         throw new IllegalArgumentException();
+       }
     }
 
     /**
@@ -33,7 +39,8 @@ final public class SmartPointer<T extends Freeable> {
      * @return the target of this pointer or null if isNull()
      */
     public T get(){
-       return this.target;
+       if(!isNull()) return target;
+       else return null;
     }
 
     /**
@@ -57,7 +64,11 @@ final public class SmartPointer<T extends Freeable> {
      */                                                                                                                     
     @Override
     public String toString(){
-       if(!isNull()) return target.toString();
-       else throw new NullPointerException();
+       if(!isNull()){
+          System.out.println(target.toString());
+          return target.toString();
+       }else{
+          throw new NullPointerException();
+       }
     }
 }
