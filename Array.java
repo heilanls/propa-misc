@@ -5,23 +5,21 @@ final public class Array<T> implements Iterable<T> {
 
     private int lowerBound;
     private int higherBound;
-    private Object[] myArray;
+    private T[] myArray;
 
     public Array(int L, int H) {
         lowerBound = L;
         higherBound = H;
 
-        myArray = new Object[this.length()];
+        myArray = (T[]) new Object[this.length()];
     }
 
-    @SuppressWarnings("unchecked")
     public T get(int index) {
-        return (T) myArray[index - lowerBound];
+        return myArray[index - lowerBound];
     }
 
-    @SuppressWarnings("unchecked")
     public void set(int index, T v) {
-        myArray[index - lowerBound] = (Object) v;
+        myArray[index - lowerBound] = v;
     }
 
     public int length() {
@@ -39,9 +37,8 @@ final public class Array<T> implements Iterable<T> {
             }
 
             @Override
-            @SuppressWarnings("unchecked")
             public T next() {
-                return (T) myArray[currentIndex++];
+                return myArray[currentIndex++];
             }
 
             @Override
